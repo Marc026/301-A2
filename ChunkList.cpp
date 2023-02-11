@@ -29,18 +29,6 @@ ChunkList<T>::~ChunkList() {
 
 template<class T>
 void ChunkList<T>::Append(T value) {
-    Node *insertNode = new Node;
-    if (head = nullptr) {
-        head = tail = new Node;
-    }
-    else if(!IsFull(insertNode->)){
-
-    }
-    else  {
-        tail->next = new Node;
-        tail = new Node;
-        insertNode->value[0];
-    }
 
 }
 
