@@ -29,6 +29,11 @@ ChunkList<T>::~ChunkList() {
 
 template<class T>
 void ChunkList<T>::Append(T value) {
+    //Node* nodetoInsert = tail;
+    //nodetoInsert->value = value;
+    //nodetoInsert->next = tail;
+    //tail = nodetoInsert;
+    //listLen++;
 
 }
 
@@ -57,8 +62,17 @@ double ChunkList<T>::LoadFactor() {
 
 template<class T>
 bool ChunkList<T>::Contains(T value) {
-
-    return false;
+    Node* iterNode = head;
+    while (iterNode != nullptr) {
+        for (int i = 0; i < ARRAY_SIZE; i++) {
+            if (iterNode->values[i] == value) {
+                return true;
+            }
+            iterNode = iterNode->next;
+        }
+        return false;
+    }
+    throw EmptyList();
 }
 
 template<class T>
@@ -68,7 +82,7 @@ T ChunkList<T>::GetIndex(int i) {
 
 template<class T>
 void ChunkList<T>::ResetIterator() {
-    arrPos = 0;
+    arrPos = -1;
 }
 
 template<class T>
