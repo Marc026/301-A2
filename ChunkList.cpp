@@ -8,13 +8,10 @@
 template<class T>
 ChunkList<T>::ChunkList() {
     listLen = 0;
-    head = tail = NULL;
+    head = tail = nullptr;
     iterNode;
     arrPos;
 
-    //for(int i = 0; i < ARRAY_SIZE; i++ ){
-    //    values[i] = -1
-    //}
 }
 
 template<class T>
@@ -65,11 +62,12 @@ template<class T>
 double ChunkList<T>::LoadFactor() {
     double percent = 0.0;
     if(listLen > 0){
-        percent = listLen / (numChunks * ARRAY_SIZE);
+        // 8 / (2 * 8) = 8/16 = 0
+        // int/int = int
+        // 1/2 = 0
+        percent = 1.0*(listLen) / (numChunks * ARRAY_SIZE);
         return percent;
     }
-    else
-    return IsEmpty();
 }
 
 template<class T>
