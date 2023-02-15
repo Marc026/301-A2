@@ -9,8 +9,9 @@ template<class T>
 ChunkList<T>::ChunkList() {
     listLen = 0;
     head = tail = nullptr;
-    iterNode;
-    arrPos;
+    numChunks = 0;
+    iterNode = nullptr;
+    arrPos =0;
 
 }
 
