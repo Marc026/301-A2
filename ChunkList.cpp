@@ -74,14 +74,14 @@ double ChunkList<T>::LoadFactor() {
 
 template<class T>
 bool ChunkList<T>::Contains(T value) {
-    Node* iterNode = head;
-    while (iterNode != nullptr) {
-        for (int i = 0; i < iterNode->len; i++) {
-            if (iterNode->values[i] == value) {
+    Node* tempNode = head;
+    while (tempNode != nullptr) {
+        for (int i = 0; i < tempNode->len; i++) {
+            if (tempNode->values[i] == value) {
                 return true;
             }
         }
-        iterNode = iterNode->next;
+        tempNode = tempNode->next;
     }
     return false;
 }
