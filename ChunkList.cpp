@@ -40,6 +40,7 @@ void ChunkList<T>::Append(T value) {
         Node *insertNode = new Node;
         insertNode->len = 0;
         insertNode->values[insertNode->len] = value;
+        insertNode->next = nullptr;
         tail->next = insertNode;
         tail = insertNode;
         numChunks++;
