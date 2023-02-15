@@ -8,9 +8,9 @@
 template<class T>
 ChunkList<T>::ChunkList() {
     listLen = 0;
-    head = tail = nullptr;
+    head = tail = NULL;
     iterNode;
-    arrPos = 0;
+    arrPos;
 
     //for(int i = 0; i < ARRAY_SIZE; i++ ){
     //    values[i] = -1
@@ -29,15 +29,27 @@ ChunkList<T>::~ChunkList() {
 
 template<class T>
 void ChunkList<T>::Append(T value) {
-    //Node* nodetoInsert = tail;
-    //nodetoInsert->value = value;
-    //nodetoInsert->next = tail;
-    //tail = nodetoInsert;
-    //listLen++;
-
+    if(tail == nullptr){
+        Node *insertNode = new Node;
+        insertNode->len = 0;
+        insertNode->values[insertNode->len] = value;
+        head = tail = insertNode;
+        numChunks++;
+    }
+    else if (tail->len < ARRAY_SIZE){
+        tail->values[tail->len] = value;
+    }
+    else {
+        Node *insertNode = new Node;
+        insertNode->len = 0;
+        insertNode->values[insertNode->len] = value;
+        tail->next = insertNode;
+        tail = insertNode;
+        numChunks++;
+    }
+    tail->len++;
+    listLen++;
 }
-
-
 
 template<class T>
 void ChunkList<T>::Remove(T value) {
@@ -51,9 +63,9 @@ int ChunkList<T>::GetLength() {
 
 template<class T>
 double ChunkList<T>::LoadFactor() {
-    double percent = 0;
+    double percent = 0.0;
     if(listLen > 0){
-        percent = listLen / numChunks * ARRAY_SIZE;
+        percent = listLen / (numChunks * ARRAY_SIZE);
         return percent;
     }
     else
@@ -64,15 +76,14 @@ template<class T>
 bool ChunkList<T>::Contains(T value) {
     Node* iterNode = head;
     while (iterNode != nullptr) {
-        for (int i = 0; i < ARRAY_SIZE; i++) {
+        for (int i = 0; i < iterNode->len; i++) {
             if (iterNode->values[i] == value) {
                 return true;
             }
-            iterNode = iterNode->next;
         }
-        return false;
+        iterNode = iterNode->next;
     }
-    throw EmptyList();
+    return false;
 }
 
 template<class T>
