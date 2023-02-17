@@ -11,12 +11,19 @@ ChunkList<T>::ChunkList() {
     head = tail = nullptr;
     numChunks = 0;
     iterNode = nullptr;
-    arrPos =0;
+    arrPos = 0;
 
 }
 
 template<class T>
 ChunkList<T>::ChunkList(T *arr, int arrLen) {
+    ChunkList();
+    for(int i = 0; i < arrLen; i++){
+        Append(arr[i]);
+    }
+    if(arrLen < 1){
+        throw InvalidArrayLength();
+    }
 
 }
 
