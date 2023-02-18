@@ -8,11 +8,10 @@
 template<class T>
 ChunkList<T>::ChunkList() {
     listLen = 0;
-    head = tail = nullptr;
     numChunks = 0;
-    iterNode = nullptr;
     arrPos = 0;
-
+    head = tail = nullptr;
+    iterNode = nullptr;
 }
 
 template<class T>
@@ -21,10 +20,10 @@ ChunkList<T>::ChunkList(T *arr, int arrLen) {
     for(int i = 0; i < arrLen; i++){
         Append(arr[i]);
     }
+
     if(arrLen < 1){
         throw InvalidArrayLength();
     }
-
 }
 
 template<class T>
@@ -41,9 +40,11 @@ void ChunkList<T>::Append(T value) {
         head = tail = insertNode;
         numChunks++;
     }
+
     else if (tail->len < ARRAY_SIZE){
         tail->values[tail->len] = value;
     }
+
     else {
         Node *insertNode = new Node;
         insertNode->len = 0;
@@ -53,14 +54,51 @@ void ChunkList<T>::Append(T value) {
         tail = insertNode;
         numChunks++;
     }
+
     tail->len++;
     listLen++;
 }
 
 template<class T>
 void ChunkList<T>::Remove(T value) {
+    Node* tempNode = head;
+    Node* prevNode = nullptr;
+    bool isFound = false;
+    while (tempNode != nullptr) {
+        for (int i = 0; i < tempNode->len; i++) {
+            if (tempNode->values[i] == value) {
+                tempNode->len--;
+                isFound = true;
+                listLen--;
+                break;
+            }
+        }
+        if(isFound){
+            break;
+        }
+        //next node
+        prevNode = tempNode;
+        tempNode = tempNode->next;
+    }
+    if (tempNode == nullptr){
+        throw EmptyList();
+    }
+    else if (tempNode->len == 0) {
+        if (tempNode == head) {
+            head = head->next;
+        } else if (tempNode == tail) {
+            tail = prevNode;
+            prevNode->next = nullptr;
+        } else {
+            prevNode->next = tempNode->next;
+        }
+        delete tempNode;
+        numChunks--;
+    }
+
 
 }
+
 
 template<class T>
 int ChunkList<T>::GetLength() {
@@ -82,6 +120,7 @@ double ChunkList<T>::LoadFactor() {
 template<class T>
 bool ChunkList<T>::Contains(T value) {
     Node* tempNode = head;
+
     while (tempNode != nullptr) {
         for (int i = 0; i < tempNode->len; i++) {
             if (tempNode->values[i] == value) {
@@ -90,6 +129,7 @@ bool ChunkList<T>::Contains(T value) {
         }
         tempNode = tempNode->next;
     }
+
     return false;
 }
 
