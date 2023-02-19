@@ -35,9 +35,11 @@ template<class T>
 void ChunkList<T>::Append(T value) {
     if(tail == nullptr){
         Node *insertNode = new Node;
+        insertNode->next = nullptr;
         insertNode->len = 0;
         insertNode->values[insertNode->len] = value;
         head = tail = insertNode;
+
         numChunks++;
     }
 
@@ -47,9 +49,9 @@ void ChunkList<T>::Append(T value) {
 
     else {
         Node *insertNode = new Node;
+        insertNode->next = nullptr;
         insertNode->len = 0;
         insertNode->values[insertNode->len] = value;
-        insertNode->next = nullptr;
         tail->next = insertNode;
         tail = insertNode;
         numChunks++;
@@ -64,10 +66,12 @@ void ChunkList<T>::Remove(T value) {
     Node* tempNode = head;
     Node* prevNode = nullptr;
     bool isFound = false;
+    int savePos;
     while (tempNode != nullptr) {
         for (int i = 0; i < tempNode->len; i++) {
             if (tempNode->values[i] == value) {
                 tempNode->len--;
+                savePos = i;
                 isFound = true;
                 listLen--;
                 break;
@@ -95,8 +99,16 @@ void ChunkList<T>::Remove(T value) {
         delete tempNode;
         numChunks--;
     }
-
-
+    else{
+        if(savePos == tempNode->len){
+            tempNode->values[savePos] = tempNode->values[savePos+1];
+        }
+        else{
+            for(int i = savePos; i < tempNode->len; i++){
+                tempNode->values[i] = tempNode->values[i+1];
+            }
+        }
+    }
 }
 
 
@@ -135,7 +147,26 @@ bool ChunkList<T>::Contains(T value) {
 
 template<class T>
 T ChunkList<T>::GetIndex(int i) {
-    return nullptr;
+    Node* tempNode = head;
+
+    while(tempNode != nullptr  && i >= 0){
+        if(i < tempNode->len){
+            return tempNode->values[i];
+        }
+        i -= tempNode->len;
+        tempNode = tempNode->next;
+    }
+
+    if(i < 0){
+        throw IndexOutOfBounds();
+    }
+    if(tempNode == nullptr){
+        throw EmptyList();
+    }
+    if(i > listLen){
+        throw IndexOutOfBounds();
+    }
+
 }
 
 template<class T>
