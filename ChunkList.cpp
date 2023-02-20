@@ -171,12 +171,37 @@ T ChunkList<T>::GetIndex(int i) {
 
 template<class T>
 void ChunkList<T>::ResetIterator() {
-    arrPos = -1;
+    arrPos = 0;
+    if(head != nullptr){
+        iterNode = head;
+    }
+    else{
+        throw EmptyList();
+    }
 }
 
 template<class T>
 T ChunkList<T>::GetNextItem() {
-    return nullptr;
+    if (head == nullptr){
+        throw EmptyList();
+    }
+    if(arrPos < 0){
+        throw IteratorOutOfBounds();
+    }
+    else if(arrPos < iterNode->len){
+        return iterNode->values[arrPos++];
+    }
+    else if(arrPos == iterNode->len){
+        if(iterNode->next != nullptr)
+        {
+            iterNode = iterNode->next;
+            arrPos = 0;
+            return iterNode->values[arrPos++];
+        }
+        else{
+            throw IteratorOutOfBounds();
+        }
+    }
 }
 
 template<class T>
