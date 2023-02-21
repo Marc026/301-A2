@@ -31,32 +31,41 @@ previous assignment.
 
 1. ***What is the advantage of the ChunkList approach as opposed to a standard 
   the link list implementation?*** (1 point)
-   > Your answer here
+   > A Chunklist is simply just multiple linked lists that have their own "set sizes" while having a head and tail
+   > pointer to look through each and every node until the condition of the function is met. By having a ChunkList, 
+   > rather than a linked list, we are able to do certain functions such as remove a value in a certain array/node then 
+   > shift the values without having to change the memory address or position of the node compared to that of having to 
+   > manage the position and pointers in lists.
    
 
 2. ***What would be the implications of increasing the size of ARRAY_SIZE to a 
    very large value?  For example, what if you plan to use this structure to 
    store around 1,000 values and you made ARRAY_SIZE 1,000?***
    
-   > Your answer here
+   > The implications would be that by increasing the ARRAY_SIZE to 1000, we are able to pool all the values to share
+   > and use up only one address of memory instead of using up a majority of the machine's allocated memory by 
+   > storing one  value at a time, and hence use the memory more efficiently.
 
    
 3. ***What is the Big O of:*** (1 point each)
    
    | Function | Big O (worst case) |
-   | ---------| ------------------ |
-   | Append   | Your answer here   |
-   | Remove   | Your answer here   |
-   | GetLength| Your answer here   |
-   | GetIndex | Your answer here   |
-   | Contains | Your answer here   |  
+   |--------------------| ------------------ |
+   | Append   | O(1)               |
+   | Remove   | O(n)               |
+   | GetLength| O(1)               |
+   | GetIndex | O(1)               |
+   | Contains | O(n)               |  
  
 
 4. ***Compare placing a new element into the *FIRST* available empty space 
    versus placing a new element in the tail chunk. What are the advantages and 
    disadvantages to automatically placing values at the tail node?*** (1 point)
    
-   > Your answer here
+   > The advantage of putting a new element at the tail node would be that it would be easier to code and less to think 
+   > of certain code cases such as whether the node is empty or not and many other cases. However, the disadvantage 
+   > would be that more memory would need to be allocated for that tail node without checking or filling up the next 
+   > "unfilled" node.
 
 ## Run Configurations
 
